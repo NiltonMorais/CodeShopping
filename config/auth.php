@@ -67,7 +67,7 @@ return [
     'providers' => [
         'users' => [
             'driver' => 'eloquent',
-            'model' => App\User::class,
+            'model' => \CodeShopping\Models\User::class,
         ],
 
         // 'users' => [
