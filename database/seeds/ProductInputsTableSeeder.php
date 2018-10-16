@@ -13,7 +13,7 @@ class ProductInputsTableSeeder extends Seeder
     {
         $products = \CodeShopping\Models\Product::all();
 
-        factory(\CodeShopping\Models\ProductInput::class, 150)
+        factory(\CodeShopping\Models\ProductInput::class, 200)
             ->make()
             ->each(function ($input) use ($products) {
                 $input->product_id = $products->random()->id;
