@@ -3,7 +3,7 @@
 namespace CodeShopping\Http\Controllers\Api;
 
 use CodeShopping\Http\Controllers\Controller;
-use CodeShopping\Http\Requests\ProductInputRequest;
+use CodeShopping\Http\Requests\ProductOutputRequest;
 use CodeShopping\Http\Resources\ProductOutputResource;
 use CodeShopping\Models\ProductOutput;
 
@@ -15,7 +15,7 @@ class ProductOutputController extends Controller
         return ProductOutputResource::collection($products_outputs);
     }
 
-    public function store(ProductInputRequest $request)
+    public function store(ProductOutputRequest $request)
     {
         $products_output = ProductOutput::create($request->all());
         return new ProductOutputResource($products_output);
