@@ -2,10 +2,10 @@
 
 namespace CodeShopping\Http\Controllers\Api;
 
+use CodeShopping\Http\Requests\ProductCategoryRequest;
 use CodeShopping\Models\Category;
 use CodeShopping\Models\Product;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\Request;
 use CodeShopping\Http\Controllers\Controller;
 
 class ProductCategoryController extends Controller
@@ -15,7 +15,7 @@ class ProductCategoryController extends Controller
         return $product->categories;
     }
 
-    public function store(Request $request, Product $product)
+    public function store(ProductCategoryRequest $request, Product $product)
     {
         $changed = $product->categories()->sync($request->categories);
         $categoriesAttachedId = $changed['attached'];
