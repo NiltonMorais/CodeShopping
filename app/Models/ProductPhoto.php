@@ -35,6 +35,11 @@ class ProductPhoto extends Model
         return "{$dir}/{$productId}";
     }
 
+    public function getPhotoUrlAttribute(){
+        $path = self::photosDir($this->product_id);
+        return asset("algumacoisa/{$path}/{$this->file_name}");
+    }
+
     public function product(){
         return $this->belongsTo(Product::class);
     }
