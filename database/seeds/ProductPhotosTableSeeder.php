@@ -54,7 +54,7 @@ class ProductPhotosTableSeeder extends Seeder
     private function createPhotoModel(Product $product){
         $photo = ProductPhoto::create([
             'product_id' => $product->id,
-            'file_name' => 'imagem.jpg'
+            'file_name' => 'no-image.jpg'
         ]);
         $this->generatePhoto($photo);
     }
@@ -72,6 +72,7 @@ class ProductPhotosTableSeeder extends Seeder
             $photoFile->getRealPath(),
             str_random(16) . '.' . $photoFile->getExtension()
         );
+        ProductPhoto::uploadFiles($productId,[$uploadFile]);
         return $uploadFile->hashName();
     }
 }
