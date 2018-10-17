@@ -15,4 +15,9 @@ class ProductPhoto extends Model
         'file_name',
         'product_id'
     ];
+
+    public static function photosPath($productId){
+        $path = self::PRODUCTS_PATH;
+        return storage_path("{$path}/{$productId}");
+    }
 }
