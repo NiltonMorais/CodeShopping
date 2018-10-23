@@ -2,6 +2,7 @@
 
 namespace CodeShopping\Http\Controllers\Api;
 
+use CodeShopping\Http\Resources\ProductPhotoCollection;
 use CodeShopping\Models\Product;
 use CodeShopping\Models\ProductPhoto;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class ProductPhotoController extends Controller
 
     public function index(Product $product)
     {
-        return ProductPhotoResource::collection($product->photos);
+        return new ProductPhotoCollection($product->photos, $product);
     }
 
     public function store(Request $request)
@@ -26,7 +27,7 @@ class ProductPhotoController extends Controller
         if($photo->product_id != $product->id){
             return response()->json([],404);
         }
-        return $photo;
+        return new ProductPhotoResource($photo);
     }
 
     public function update(Request $request, ProductPhoto $productPhoto)
