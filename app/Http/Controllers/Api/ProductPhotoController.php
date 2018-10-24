@@ -36,9 +36,11 @@ class ProductPhotoController extends Controller
         return new ProductPhotoResource($photo);
     }
 
-    public function destroy(ProductPhoto $productPhoto)
+    public function destroy(Product $product, ProductPhoto $photo)
     {
-        //
+        $this->validateProductPhoto($product, $photo);
+        $photo->deleteWithPhoto();
+        return response()->json([],204);
     }
 
     private function validateProductPhoto(Product $product, ProductPhoto $photo)

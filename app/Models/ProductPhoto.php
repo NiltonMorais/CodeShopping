@@ -18,12 +18,14 @@ class ProductPhoto extends Model
         'product_id'
     ];
 
-    public static function photosPath($productId){
+    public static function photosPath($productId)
+    {
         $path = self::PRODUCTS_PATH;
         return storage_path("{$path}/{$productId}");
     }
 
-    public static function createWithPhotosFiles(int $productId, array $files): Collection{
+    public static function createWithPhotosFiles(int $productId, array $files): Collection
+    {
         try{
             self::uploadFiles($productId, $files);
             \DB::beginTransaction();
@@ -37,7 +39,8 @@ class ProductPhoto extends Model
         }
     }
 
-    public function updateWithPhoto(UploadedFile $file): ProductPhoto{
+    public function updateWithPhoto(UploadedFile $file): ProductPhoto
+    {
         try{
             self::uploadFiles($this->product_id, [$file]);
             \DB::beginTransaction();
@@ -53,12 +56,28 @@ class ProductPhoto extends Model
         }
     }
 
-    private function deletePhoto($fileName){
+    public function deleteWithPhoto(): bool
+    {
+        try{
+            \DB::beginTransaction();
+            $this->deletePhoto($this->file_name);
+            $result = $this->delete();
+            \DB::commit();
+            return $result;
+        }catch(\Exception $e){
+            \DB::rollback();
+            throw $e;
+        }
+    }
+
+    private function deletePhoto($fileName)
+    {
         $dir = self::photosDir($this->product_id);
         \Storage::disk('public')->delete("{$dir}/{$fileName}");
     }
 
-    private static function deleteFiles(int $productId, array $files){
+    private static function deleteFiles(int $productId, array $files)
+    {
         /** @var UploadedFile $file */
         foreach ($files as $file){
             $path = self::photosPath($productId);
@@ -69,7 +88,8 @@ class ProductPhoto extends Model
         }
     }
 
-    public static function uploadFiles(int $productId, array $files){
+    public static function uploadFiles(int $productId, array $files)
+    {
         $dir = self::photosDir($productId);
         /** @var UploadedFile $file */
         foreach ($files as $file){
@@ -77,7 +97,8 @@ class ProductPhoto extends Model
         }
     }
 
-    private static function createPhotosModels(int $productId, array $files): array{
+    private static function createPhotosModels(int $productId, array $files): array
+    {
         $photos = [];
         /** @var UploadedFile $file */
         foreach ($files as $file) {
@@ -89,17 +110,20 @@ class ProductPhoto extends Model
         return $photos;
     }
 
-    public static function photosDir($productId){
+    public static function photosDir($productId)
+    {
         $dir = self::DIR_PRODUCTS;
         return "{$dir}/{$productId}";
     }
 
-    public function getPhotoUrlAttribute(){
+    public function getPhotoUrlAttribute()
+    {
         $path = self::photosDir($this->product_id);
         return asset("storage/{$path}/{$this->file_name}");
     }
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo(Product::class);
     }
 }
