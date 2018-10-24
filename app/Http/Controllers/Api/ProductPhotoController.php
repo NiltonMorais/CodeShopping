@@ -6,7 +6,6 @@ use CodeShopping\Http\Requests\ProductPhotoRequest;
 use CodeShopping\Http\Resources\ProductPhotoCollection;
 use CodeShopping\Models\Product;
 use CodeShopping\Models\ProductPhoto;
-use Illuminate\Http\Request;
 use CodeShopping\Http\Controllers\Controller;
 use CodeShopping\Http\Resources\ProductPhotoResource;
 
@@ -26,19 +25,26 @@ class ProductPhotoController extends Controller
 
     public function show(Product $product, ProductPhoto $photo)
     {
-        if($photo->product_id != $product->id){
-            return response()->json([],404);
-        }
+        $this->validateProductPhoto($product, $photo);
         return new ProductPhotoResource($photo);
     }
 
-    public function update(Request $request, ProductPhoto $productPhoto)
+    public function update(ProductPhotoRequest $request, Product $product,ProductPhoto $photo)
     {
-        //
+        $this->validateProductPhoto($product, $photo);
+        $photo = $photo->updateWithPhoto($request->photo);
+        return new ProductPhotoResource($photo);
     }
 
     public function destroy(ProductPhoto $productPhoto)
     {
         //
+    }
+
+    private function validateProductPhoto(Product $product, ProductPhoto $photo)
+    {
+        if($photo->product_id != $product->id){
+            return response()->json([],404);
+        }
     }
 }

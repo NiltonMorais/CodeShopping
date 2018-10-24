@@ -27,7 +27,7 @@ class ProductPhoto extends Model
         try{
             self::uploadFiles($productId, $files);
             \DB::beginTransaction();
-            $photos = self::createPhotosModels($productId, $files);
+                $photos = self::createPhotosModels($productId, $files);
             \DB::commit();
             return new Collection($photos);
         }catch(\Exception $e){
@@ -37,11 +37,32 @@ class ProductPhoto extends Model
         }
     }
 
+    public function updateWithPhoto(UploadedFile $file): ProductPhoto{
+        try{
+            self::uploadFiles($this->product_id, [$file]);
+            \DB::beginTransaction();
+                $this->deletePhoto($this->file_name);
+                $this->file_name = $file->hashName();
+                $this->save();
+            \DB::commit();
+            return $this;
+        }catch(\Exception $e){
+            \DB::rollback();
+            self::deleteFiles($this->product_id, [$file]);
+            throw $e;
+        }
+    }
+
+    private function deletePhoto($fileName){
+        $dir = self::photosDir($this->product_id);
+        \Storage::disk('public')->delete("{$dir}/{$fileName}");
+    }
+
     private static function deleteFiles(int $productId, array $files){
         /** @var UploadedFile $file */
         foreach ($files as $file){
             $path = self::photosPath($productId);
-            $photoPath = "{$path}/{$$file->hashName()}";
+            $photoPath = "{$path}/{$file->hashName()}";
             if(file_exists($photoPath)){
                 \File::delete($photoPath);
             }
