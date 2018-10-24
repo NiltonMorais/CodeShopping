@@ -2,6 +2,7 @@
 
 namespace CodeShopping\Http\Controllers\Api;
 
+use CodeShopping\Http\Requests\ProductPhotoRequest;
 use CodeShopping\Http\Resources\ProductPhotoCollection;
 use CodeShopping\Models\Product;
 use CodeShopping\Models\ProductPhoto;
@@ -17,9 +18,10 @@ class ProductPhotoController extends Controller
         return new ProductPhotoCollection($product->photos, $product);
     }
 
-    public function store(Request $request, Product $product)
+    public function store(ProductPhotoRequest $request, Product $product)
     {
-        return ProductPhoto::createWithPhotosFiles($product->id, $request->photos);
+        $photos = ProductPhoto::createWithPhotosFiles($product->id, $request->photos);
+        return new ProductPhotoCollection($photos, $product);
     }
 
     public function show(Product $product, ProductPhoto $photo)
