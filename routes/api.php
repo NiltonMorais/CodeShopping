@@ -25,4 +25,5 @@ Route::group(['namespace'=>'Api', 'as'=>'api.'],function(){
     Route::resource('products.categories', 'ProductCategoryController', ['only'=>['index','store','destroy']]);
     Route::resource('products.photos', 'ProductPhotoController', ['except'=>['create','edit']]);
     Route::resource('categories', 'CategoryController', ['except'=>['create','edit']]);
+    Route::resource('users', 'UserController', ['except'=>['create','edit']]);
 });
