@@ -24,16 +24,9 @@ export class LoginComponent implements OnInit {
     submit() {
         this.http.post<any>('http://localhost:8000/api/login', this.credentials)
             .subscribe((data) => {
-                this.router.navigate(['categories/list']);
                 const token = data.token;
-                this.http.get('http://localhost:8000/api/categories', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                })
-                    .subscribe((data) => {
-                        console.log(data);
-                    });
+                window.localStorage.setItem('token', token);
+                this.router.navigate(['categories/list']);
             });
     }
 
