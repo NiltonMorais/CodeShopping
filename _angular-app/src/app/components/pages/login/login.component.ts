@@ -9,10 +9,12 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
 
-    public credentials = {
+    credentials = {
         email: 'admin@user.com',
         password: 'secret',
     };
+
+    showMessageError = false;
 
     constructor(private http: HttpClient, private router: Router) {
 
@@ -27,7 +29,7 @@ export class LoginComponent implements OnInit {
                 const token = data.token;
                 window.localStorage.setItem('token', token);
                 this.router.navigate(['categories/list']);
-            });
+            }, () => { this.showMessageError = true });
     }
 
 }
