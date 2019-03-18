@@ -1,6 +1,4 @@
-<div class="alert alert-danger mt-3 col-md-4 offset-4" role="alert" *ngIf="showMessageError">
-    Credenciais inválidas!
-</div>
+<alert-error *ngIf="showMessageError">Credenciais inválidas</alert-error>
 <form class="form-signin" (submit)="submit()">
     <h1 class="h3 mb-3 font-weight-normal">Code Shopping - Login</h1>
     <input [(ngModel)]="credentials.email" type="email" id="email" name="email" class="form-control" placeholder="Digite seu e-mail" required autofocus>
