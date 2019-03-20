@@ -1,56 +1,61 @@
 <div class="row">
-  <h1>Listagem de categorias</h1>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <td colspan="5">
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nova categoria</button>
-        </td>
-      </tr>
-      <tr>
-        <th style="width: 5%">ID</th>
-        <th style="width: 65%">Nome</th>
-        <th style="width: 10%">Ativa?</th>
-        <th style="width: 10%">Criado em</th>
-        <th style="width: 10%">Ações</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let category of categories">
-        <td>{{ category.id }}</td>
-        <td>{{ category.name }}</td>
-        <td>
-          <i class="fas" [ngClass]="{'fa-check': category.active, 'fa-times': !category.active}"></i>
-        </td>
-        <td>{{ category.created_at.date | date: 'dd/MM/yyyy' }}</td>
-        <td></td>
-      </tr>
-    </tbody>
-  </table>
+    <h1>Listagem de categorias</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <td colspan="5">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nova
+                    categoria
+                </button>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 5%">ID</th>
+            <th style="width: 65%">Nome</th>
+            <th style="width: 10%">Ativa?</th>
+            <th style="width: 10%">Criado em</th>
+            <th style="width: 10%">Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let category of categories">
+            <td>{{ category.id }}</td>
+            <td>{{ category.name }}</td>
+            <td>
+                <i class="fas" [ngClass]="{'fa-check': category.active, 'fa-times': !category.active}"></i>
+            </td>
+            <td>{{ category.created_at.date | date: 'dd/MM/yyyy' }}</td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Nova Categoria</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="name">Nome</label>
-            <input type="text" class="form-control" id="name" placeholder="Insira um nome">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-      </div>
+<form (submit)="submit()">
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Nova Categoria</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <label for="name">Nome</label>
+                        <input [(ngModel)]="category.name" type="text" class="form-control" name="name" id="name"
+                               placeholder="Insira um nome">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
+</form>
