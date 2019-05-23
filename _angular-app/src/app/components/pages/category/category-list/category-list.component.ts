@@ -45,19 +45,16 @@ export class CategoryListComponent implements OnInit {
             }
         })
             .subscribe((category) => {
-                $('#exampleModal').modal('hide');
+                this.modal.hide();
                 this.getCategories();
             });
     }
 
-    showModal(){
+    showModal() {
         this.modal.show();
-        setTimeout(() => {
-            this.modal.hide();
-        }, 3000);
     }
 
-    hideModal($event: Event){
+    hideModal($event: Event) {
         //console.log($event);
     }
 }

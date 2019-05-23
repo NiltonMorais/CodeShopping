@@ -4,9 +4,7 @@
         <thead>
         <tr>
             <td colspan="5">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Nova
-                    categoria
-                </button>
+                <button type="button" class="btn btn-primary" (click)="showModal()">Nova categoria</button>
             </td>
         </tr>
         <tr>
@@ -29,46 +27,22 @@
         </tr>
         </tbody>
     </table>
-    <button type="button" (click)="showModal()">Abrir</button>
 </div>
-
-<modal (onHide)="hideModal($event)">
-    <div modal-title>
-        Título
-    </div>
-    <div modal-body>
-        Body
-    </div>
-    <div modal-footer>
-        Footer
-    </div>
-</modal>
 
 <!-- Modal -->
 <form (submit)="submit()">
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Nova Categoria</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-
-                    <div class="form-group">
-                        <label for="name">Nome</label>
-                        <input [(ngModel)]="category.name" type="text" class="form-control" name="name" id="name"
-                               placeholder="Insira um nome">
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary">Salvar</button>
-                </div>
-            </div>
+<modal (onHide)="hideModal($event)">
+    <h5 modal-title>Nova Categoria</h5>
+    <div modal-body>
+        <div class="form-group">
+            <label for="name">Nome</label>
+            <input [(ngModel)]="category.name" type="text" class="form-control" name="name" id="name"
+                   placeholder="Insira um nome">
         </div>
     </div>
+    <div modal-footer>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </div>
+</modal>
 </form>
