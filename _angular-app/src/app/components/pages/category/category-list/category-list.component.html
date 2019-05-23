@@ -29,7 +29,20 @@
         </tr>
         </tbody>
     </table>
+    <button type="button" (click)="showModal()">Abrir</button>
 </div>
+
+<modal>
+    <div modal-title>
+        Título
+    </div>
+    <div modal-body>
+        Body
+    </div>
+    <div modal-footer>
+        Footer
+    </div>
+</modal>
 
 <!-- Modal -->
 <form (submit)="submit()">
