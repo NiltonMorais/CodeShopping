@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {CategoryNewModalComponent} from "../category-new-modal/category-new-modal.component";
 import {CategoryEditModalComponent} from "../category-edit-modal/category-edit-modal.component";
 import {CategoryDeleteModalComponent} from "../category-delete-modal/category-delete-modal.component";
+import {CategoryHttpService} from "../../../../services/http/category-http.service";
 
 declare let $;
 
@@ -26,7 +27,7 @@ export class CategoryListComponent implements OnInit {
 
     categoryId: number;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private categoryHttp: CategoryHttpService) {
     }
 
     ngOnInit() {
@@ -34,50 +35,45 @@ export class CategoryListComponent implements OnInit {
     }
 
     getCategories() {
-        const token = window.localStorage.getItem('token');
-        this.http.get<{ data: Array<{ id: number, name: string, active: boolean, created_at: { date: string } }> }>('http://localhost:8000/api/categories', {
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        })
+        this.categoryHttp.list()
             .subscribe(response => this.categories = response.data);
     }
 
-    showModalInsert(){
+    showModalInsert() {
         this.categoryNewModal.showModal();
     }
 
-    showModalEdit(categoryId: number){
+    showModalEdit(categoryId: number) {
         this.categoryId = categoryId;
         this.categoryEditModal.showModal();
     }
 
-    showModalDelete(categoryId: number){
+    showModalDelete(categoryId: number) {
         this.categoryId = categoryId;
         this.categoryDeleteModal.showModal();
     }
 
-    onInsertSuccess($event){
+    onInsertSuccess($event) {
         this.getCategories();
     }
 
-    onInsertError($event: HttpErrorResponse){
+    onInsertError($event: HttpErrorResponse) {
         console.log($event);
     }
 
-    onEditSuccess($event){
+    onEditSuccess($event) {
         this.getCategories();
     }
 
-    onEditError($event: HttpErrorResponse){
+    onEditError($event: HttpErrorResponse) {
         console.log($event);
     }
 
-    onDeleteSuccess($event){
+    onDeleteSuccess($event) {
         this.getCategories();
     }
 
-    onDeleteError($event: HttpErrorResponse){
+    onDeleteError($event: HttpErrorResponse) {
         console.log($event);
     }
 }
