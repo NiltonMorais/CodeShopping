@@ -33,26 +33,26 @@ export class CategoryEditModalComponent implements OnInit {
     @Input()
     set categoryId(value) {
         this._categoryId = value;
-        const token = window.localStorage.getItem('token');
-        this.http.get<{data: any}>(`http://localhost:8000/api/categories/${value}`, {
-            headers: {
-                'Authorization': `Bearer ${token}`
+        if(this._categoryId){
+            const token = window.localStorage.getItem('token');
+            this.http.get<{data: any}>(`http://localhost:8000/api/categories/${value}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
             })
-            .subscribe((response) => {
-                this.category = response.data;
-                this.onSuccess.emit(response.data);
-                this.modal.hide();
-            }, error => this.onError.emit(error));
+                .subscribe((response) => {
+                    this.category = response.data;
+                }, error => this.onError.emit(error));
+        }
     }
 
     submit() {
         const token = window.localStorage.getItem('token');
-        this.http.post('http://localhost:8000/api/categories', this.category, {
+        this.http.put(`http://localhost:8000/api/categories/${this._categoryId}`, this.category, {
             headers: {
                 'Authorization': `Bearer ${token}`
             }
-        })
+            })
             .subscribe((category) => {
                 this.onSuccess.emit(category);
                 this.modal.hide();
