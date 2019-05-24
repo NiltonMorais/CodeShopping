@@ -7,6 +7,11 @@
         <input [(ngModel)]="category.name" type="text" class="form-control" name="name" id="name"
                placeholder="Insira um nome">
       </div>
+      <div class="form-group form-check">
+        <input [(ngModel)]="category.active" type="checkbox" class="form-check-input" name="active" id="active"
+               placeholder="Insira um nome">
+        <label for="active">Ativo?</label>
+      </div>
     </div>
     <div modal-footer>
       <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
